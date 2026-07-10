@@ -780,10 +780,10 @@
             <span class="price-card__badge">מחיר מיוחד לחברי הקהילה</span>
             <div class="price-card__amount"><span class="cur">₪</span>300</div>
             <p class="price-card__meta">לכל הקורס · 3 מפגשים · נפתחים ב-12.8</p>
-            <!-- טופס תשלום UPAY. amount=1 = מצב בדיקה — להחזיר ל-300 אחרי בדיקה חיה מוצלחת. -->
+            <!-- טופס תשלום UPAY. מחיר חי ₪300 (בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451). -->
             <form class="pay-form" name="upayform" action="https://app.upay.co.il/API6/clientsecure/redirectpage.php" method="post" target="upayIframe">
               <input type="hidden" name="email" value="SHAVIMYOTER2024@GMAIL.COM">
-              <input type="hidden" name="amount" value="1"><!-- בדיקה ₪1 — להחזיר ל-300 לפני עלייה לאוויר -->
+              <input type="hidden" name="amount" value="300">
               <input type="hidden" name="returnurl" value="https://shavimyoter2024-a11y.github.io/shuk-hahon/pay-return.html">
               <input type="hidden" name="ipnurl" value="">
               <input type="hidden" name="paymentdetails" value="קורס שוק ההון שווים יותר">
