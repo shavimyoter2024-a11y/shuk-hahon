@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a2410" />
+  <meta name="robots" content="noindex" />
+  <title>מעבד את התשלום…</title>
+  <style>
+    html,body{height:100%}
+    body{margin:0;background:#1a2410;color:#f3f1e6;font-family:"Assistant","Segoe UI","Arial Hebrew",Arial,sans-serif;display:grid;place-items:center;text-align:center}
+    .box{display:flex;flex-direction:column;align-items:center;gap:16px}
+    .spin{width:38px;height:38px;border-radius:50%;border:3px solid rgba(232,189,87,.25);border-top-color:#e8bd57;animation:s .8s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+    p{margin:0;color:rgba(243,241,230,.7);font-size:15px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spin" aria-hidden="true"></div>
+    <p>מעבד את התשלום, רגע…</p>
+  </div>
+  <script>
+    (function () {
+      // UPAY loads this page inside the payment iframe after the transaction,
+      // passing the result as query params. We bounce the TOP window to the
+      // branded thank-you page (success) or back to the register section (failure).
+      var p = new URLSearchParams(location.search);
+      var err = p.get("errormessage");
+      var pd = (p.get("providererrordescription") || "").toUpperCase();
+      var failed = !!err || (pd && pd !== "SUCCESS");
+
+      // distributor attribution: our utm params survived UPAY's round-trip on the
+      // returnurl; report them + the transaction id to the dedicated Make webhook.
+      // sendBeacon is fire-and-forget and survives the redirect below.
+      // ⚠️ dedicated "landing events" webhook only — NEVER the ManyChat scenario's.
+      var ATTRIBUTION_WEBHOOK_URL = "https://hook.eu2.make.com/mu61xo25bwjq2wojr7dzxkcldiofovrm"; // תרחיש "אירועי דף נחיתה"
+      try {
+        if (ATTRIBUTION_WEBHOOK_URL && !failed) {
+          var body = new URLSearchParams({
+            type: "payment",
+            page: "shuk-hahon", // בלי page הפנקס רושם את השורה כנדל"ן (ברירת המחדל ב-Make)
+            txid: p.get("transactionid") || "",
+            amount: p.get("amount") || "",
+            utm_source: p.get("utm_source") || "",
+            utm_medium: p.get("utm_medium") || ""
+          });
+          navigator.sendBeacon(ATTRIBUTION_WEBHOOK_URL, body);
+        }
+      } catch (e) {}
+
+      var dest = failed ? "./?payment=failed#register" : "./toda.html";
+      var target = window.top || window;
+      try {
+        target.location.href = new URL(dest, location.href).href;
+      } catch (e) {
+        location.href = dest;
+      }
+    })();
+  </script>
+</body>
+</html>
