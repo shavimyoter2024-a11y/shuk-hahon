@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#1b2114" />
 
   <title>קורס שוק ההון | שווים יותר · קהילת משרתי המילואים</title>
-  <meta name="description" content="קורס שוק ההון של קהילת שווים יותר, בשיתוף IBI בית ההשקעות: מהשטח לשוק ההון. מושגי יסוד, עקרונות השקעה, מערכות מסחר וסיור בחדר המסחר — בהתאמה למשרתי מילואים וכוחות הביטחון." />
+  <meta name="description" content="קורס שוק ההון של קהילת שווים יותר, בשיתוף IBI בית ההשקעות: מהשטח לשוק ההון. מושגי יסוד, עקרונות השקעה, מערכות מסחר וסיור בחדר המסחר, בהתאמה למשרתי מילואים וכוחות הביטחון." />
   <meta property="og:title" content="קורס שוק ההון | שווים יותר" />
   <meta property="og:description" content="מהשטח לשוק ההון: קורס בשיתוף IBI לקהילת משרתי המילואים וכוחות הביטחון." />
   <meta property="og:type" content="website" />
@@ -258,8 +258,16 @@
     .price-card .pay-submit { width: 100%; text-align: center; }
     .pay-fallback { margin-top: 12px; background: transparent; color: var(--muted); font-family: inherit; font-size: 13.5px; border: 0; cursor: pointer; text-decoration: underline; }
     .pay-fallback:hover { color: var(--gold-soft); }
-    /* Bit needs a full-page checkout (its app can't open from inside an iframe),
-       so touch devices get a second, clearly-labelled button. */
+    /* Bit can't open its app from inside an iframe (white page) — so Bit gets its
+       own button that submits the SAME form to a full checkout in a new tab. */
+    .pay-bit {
+      width: 100%; margin-top: 10px; padding: 13px 24px; border-radius: 100px;
+      background: rgba(243,241,230,.06); border: 1px solid var(--line-2);
+      color: var(--cream); font-family: inherit; font-size: 15.5px; font-weight: 700; cursor: pointer;
+      transition: border-color .25s, color .25s;
+    }
+    .pay-bit:hover { border-color: var(--gold); color: var(--gold-soft); }
+    @media (pointer: coarse) { .pay-bit:active { border-color: var(--gold); color: var(--gold-soft); } }
 
     /* embedded UPAY checkout window */
     .pay-window { margin-top: 24px; border: 1px solid rgba(232,189,87,.45); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(0,0,0,.7); }
@@ -593,7 +601,7 @@
 
         <p class="hero__sub">
           3 מפגשים שמלווים משרתי מילואים וכוחות הביטחון אל שוק ההון:
-          מושגי היסוד, עקרונות ההשקעה ופרקטיקה במערכות מסחר אמיתיות —
+          מושגי היסוד, עקרונות ההשקעה ופרקטיקה במערכות מסחר אמיתיות,
           בשיתוף IBI, בית ההשקעות המוביל בישראל.
         </p>
 
@@ -641,7 +649,7 @@
           <div class="aud-card">
             <span class="aud-card__n">04</span>
             <h3>רוצים כלים פרקטיים</h3>
-            <p>כבר בעניין, ורוצים לדעת לתת פקודת מסחר, לקרוא גרף ולבנות תיק מפוזר — בידיים שלכם.</p>
+            <p>כבר בעניין, ורוצים לדעת לתת פקודת מסחר, לקרוא גרף ולבנות תיק מפוזר בעצמכם.</p>
           </div>
         </div>
       </div>
@@ -671,7 +679,7 @@
         <div class="section__head">
           <p class="eyebrow">הסילבוס · 3 מפגשים</p>
           <h2 class="section__title display">מהיסודות של שוק ההון<br>עד <span class="accent">הפקודה הראשונה</span>.</h2>
-          <p class="section__lead">שלושה מפגשים שבונים את הידע שלב אחרי שלב, בשיתוף IBI — בית ההשקעות המוביל בישראל. לחצו על כל מפגש לפרטים.</p>
+          <p class="section__lead">שלושה מפגשים שבונים את הידע שלב אחרי שלב, בשיתוף IBI, בית ההשקעות המוביל בישראל. לחצו על כל מפגש לפרטים.</p>
         </div>
 
         <div class="syl">
@@ -683,8 +691,8 @@
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="syl__body">
-              <span class="syl__badge">מפגש פרונטלי במשרדי IBI · 17:30–19:30</span>
-              <p>נפתחים פנים אל פנים במשרדי IBI במגדל שלום מאיר (אחד העם 9, תל אביב), כולל סיור בחדר המסחר של IBI TRADE. מקבלים תמונה ברורה של שוק ההון: המושגים הבסיסיים, השחקנים המרכזיים — מי משקיע ולמה — ומה חשוב לדעת לפני שמתחילים. הכל בגובה העיניים, בלי מילים גבוהות.</p>
+              <span class="syl__badge">מפגש פרונטלי במשרדי IBI · 17:30 עד 19:30</span>
+              <p>נפתחים פנים אל פנים במשרדי IBI במגדל שלום מאיר (אחד העם 9, תל אביב), כולל סיור בחדר המסחר של IBI TRADE. מקבלים תמונה ברורה של שוק ההון: המושגים הבסיסיים, השחקנים המרכזיים, מי משקיע ולמה, ומה חשוב לדעת לפני שמתחילים. הכל בגובה העיניים, בלי מילים גבוהות.</p>
             </div>
           </details>
 
@@ -696,8 +704,8 @@
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="syl__body">
-              <span class="syl__badge">הרצאת זום · 19:00–20:30</span>
-              <p>נכנסים לעקרונות ולפסיכולוגיה של ההשקעות: איך כסף נשחק בעו״ש מול האינפלציה ומה לא מספרים לנו על חשבון העו״ש, האלטרנטיבות — קרנות כספיות ופיקדונות, מסחר בבנקים מול בתי השקעות, היכרות עם מכשירי השקעה, ריבית דריבית וההשפעה שלה על העתיד הכלכלי שלכם, ויחס סיכוי-סיכון ופיזור.</p>
+              <span class="syl__badge">הרצאת זום · 19:00 עד 20:30</span>
+              <p>נכנסים לעקרונות ולפסיכולוגיה של ההשקעות: איך כסף נשחק בעו״ש מול האינפלציה ומה לא מספרים לנו על חשבון העו״ש, האלטרנטיבות של קרנות כספיות ופיקדונות, מסחר בבנקים מול בתי השקעות, היכרות עם מכשירי השקעה, ריבית דריבית וההשפעה שלה על העתיד הכלכלי שלכם, ויחס סיכוי סיכון ופיזור.</p>
             </div>
           </details>
 
@@ -705,12 +713,12 @@
             <summary>
               <span class="syl__num">03</span>
               <span class="syl__date">26.8</span>
-              <span class="syl__title">פ-ר-ק-ט-י-ק-ה</span>
+              <span class="syl__title">פרקטיקה</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="syl__body">
-              <span class="syl__badge">מפגש סיכום · זום · 19:00–20:30</span>
-              <p>מתרגמים הכל למעשה: אסטרטגיות השקעה לטווח ארוך, מדדים, קרנות נאמנות וקרנות סל — יתרונות וחסרונות, חשיפה למט״ח, היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר — Market Order, Limit Order, Stop Loss, Take Profit — ניתוח גרפים ומגמות ואקטואליה פיננסית.</p>
+              <span class="syl__badge">מפגש סיכום · זום · 19:00 עד 20:30</span>
+              <p>מתרגמים הכל למעשה: אסטרטגיות השקעה לטווח ארוך, מדדים, קרנות נאמנות וקרנות סל על היתרונות והחסרונות שלהן, חשיפה למט״ח, היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר (Market Order, Limit Order, Stop Loss, Take Profit), ניתוח גרפים ומגמות ואקטואליה פיננסית.</p>
             </div>
           </details>
         </div>
@@ -723,8 +731,8 @@
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">השותפים לדרך</p>
-          <h2 class="section__title display">בשיתוף <span class="accent">IBI</span> — בית ההשקעות המוביל בישראל.</h2>
-          <p class="section__lead">מפגש הפתיחה מתארח במשרדי IBI במגדל שלום מאיר בתל אביב, וכולל סיור בחדר המסחר של IBI TRADE — הצצה אמיתית אל מאחורי הקלעים של שוק ההון הישראלי.</p>
+          <h2 class="section__title display">בשיתוף <span class="accent">IBI</span>, בית ההשקעות המוביל בישראל.</h2>
+          <p class="section__lead">מפגש הפתיחה מתארח במשרדי IBI במגדל שלום מאיר בתל אביב, וכולל סיור בחדר המסחר של IBI TRADE: הצצה אמיתית אל מאחורי הקלעים של שוק ההון הישראלי.</p>
         </div>
         <div class="partner-chips">
           <span>השקעות</span>
@@ -771,6 +779,26 @@
       </div>
     </section>
 
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="eyebrow">רגעים מהקורס</p>
+          <h2 class="section__title display">ככה זה נראה <span class="accent">מבפנים.</span></h2>
+        </div>
+        <div class="gal">
+          <figure><img src="assets/g1.webp" width="1000" height="1333" alt="מפגש הפתיחה של קורס שוק ההון: הרצאה מול משתתפי הקורס במשרדי IBI" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g2.webp" width="1000" height="1778" alt="חדר הישיבות מלא במשתתפי הקורס בזמן ההרצאה" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g3.webp" width="1000" height="1333" alt="מצגת שווים יותר ו-IBI TRADE מול משתתפי הקורס" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g4.webp" width="1000" height="1778" alt="משתתפים בשיחת נטוורקינג בהפסקה" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g5.webp" width="1000" height="1333" alt="מבט רחב על מפגש הקורס סביב השולחן" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g6.webp" width="1000" height="1778" alt="שקף הפתיחה של ההרצאה: שוק ההון ועולם ההשקעות לקהילת שווים יותר" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g7.webp" width="1000" height="1333" alt="המרצה מציג בפני משתתפי הקורס" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g8.webp" width="1000" height="1778" alt="משתתפי הקורס מקשיבים להרצאה" loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
+    </section>
+
     <!-- PRICING / REGISTER -->
     <section class="section" id="register">
       <div class="wrap">
@@ -797,6 +825,7 @@
               <input type="hidden" name="lang" value="HE">
               <input type="hidden" name="currency" value="NIS">
               <button type="submit" class="btn btn-gold btn-lg pay-submit">להרשמה ותשלום מאובטח&nbsp;←</button>
+              <button type="submit" formtarget="_blank" class="pay-bit">משלמים בביט? לחצו כאן 📱 (נפתח בדף נפרד)</button>
               <button type="submit" formtarget="_blank" class="pay-fallback">אפשר גם לשלם בדף נפרד ←</button>
             </form>
             <p class="price-card__secure">תשלום מאובטח באמצעות UPAY</p>
@@ -844,7 +873,7 @@
               <span class="faq__q">איפה ואיך מתקיימים המפגשים?</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
-            <div class="faq__body"><p>הפורמט משולב: מפגש הפתיחה פנים אל פנים במשרדי IBI במגדל שלום מאיר בתל אביב — כולל סיור בחדר המסחר — ושני המפגשים הבאים בזום. הפרטים המדויקים לכל מפגש נשלחים לנרשמים מראש.</p></div>
+            <div class="faq__body"><p>הפורמט משולב: מפגש הפתיחה פנים אל פנים במשרדי IBI במגדל שלום מאיר בתל אביב (כולל סיור בחדר המסחר), ושני המפגשים הבאים בזום. הפרטים המדויקים לכל מפגש נשלחים לנרשמים מראש.</p></div>
           </details>
           <details>
             <summary>
@@ -983,7 +1012,7 @@
 
       // scroll reveals for the sections below the hero
       var rvTargets = document.querySelectorAll(
-        ".section .section__head, .aud-card, .gains li, .syl details, .partner-chips span, .chat-screen, .price-card, .faq details, .footer__cta"
+        ".section .section__head, .aud-card, .gains li, .syl details, .partner-chips span, .chat-screen, .gal figure, .price-card, .faq details, .footer__cta"
       );
       rvTargets.forEach(function (el) {
         el.classList.add("rv");
@@ -1087,7 +1116,7 @@
               leadMsg.textContent = "קיבלנו! הפרטים המלאים בדרך אליך לוואטסאפ 🙌";
             }).catch(function () {
               btn.disabled = false;
-              leadMsg.textContent = "משהו השתבש — אפשר גם לכתוב לנו ישירות בוואטסאפ (למטה בעמוד).";
+              leadMsg.textContent = "משהו השתבש. אפשר גם לכתוב לנו ישירות בוואטסאפ (למטה בעמוד).";
             });
           });
         }
@@ -1104,7 +1133,8 @@
       if (payForm && payWindow) {
         payForm.addEventListener("submit", function (e) {
           // fallback tab + Bit full-page leave the page; only the embedded flow reveals the iframe
-          if (e.submitter && e.submitter.classList.contains("pay-fallback")) return;
+          if (e.submitter && (e.submitter.classList.contains("pay-fallback") ||
+                              e.submitter.classList.contains("pay-bit"))) return;
           payWindow.hidden = false;
           if (payLoader) payLoader.style.display = "";
           setTimeout(function () { payWindow.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
