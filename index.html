@@ -269,7 +269,7 @@
     .pay-bit:hover { border-color: var(--gold); color: var(--gold-soft); }
     @media (pointer: coarse) { .pay-bit:active { border-color: var(--gold); color: var(--gold-soft); } }
 
-    /* launch-week promo (15.7 עד 21.7) — ה-JS מדליק body.promo-on רק בתוך חלון המבצע;
+    /* launch-week promo (עד 21.7) — ה-JS מדליק body.promo-on רק בתוך חלון המבצע;
        בלי JS הדף נשאר בבטחה על המחיר המלא */
     .promo-strip {
       display: none; margin-bottom: 22px; padding: 26px 22px 22px; text-align: center;
@@ -841,7 +841,7 @@
       <div class="wrap">
         <h2 class="sr-only">הרשמה ותשלום</h2>
 
-        <!-- פס מבצע ההשקה — נחשף אוטומטית ע"י ה-JS רק בין 15.7 ל-21.7 -->
+        <!-- פס מבצע ההשקה — נחשף אוטומטית ע"י ה-JS רק בתוך חלון המבצע (עד 21.7) -->
         <div class="promo-strip">
           <div class="promo-strip__title">🔥 מבצע השקה לשבוע: הקורס ב-<b>₪200</b> במקום ₪300</div>
           <div class="promo-count" aria-hidden="true">
@@ -860,7 +860,7 @@
             <p class="price-card__was">מחיר מלא <s>₪300</s> · מחיר ההשקה בתוקף עד 21.7</p>
             <p class="price-card__meta">לכל הקורס · 3 מפגשים · נפתחים ב-12.8</p>
             <!-- טופס תשלום UPAY. מחיר חי ₪300 (בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451).
-                 בין 15.7 ל-21.7 ה-JS (בלוק "מבצע השקה") מוריד את amount ל-200 ומחזיר בסוף. -->
+                 עד 21.7 ה-JS (בלוק "מבצע השקה") מוריד את amount ל-200 ומחזיר בסוף. -->
             <form class="pay-form" name="upayform" action="https://app.upay.co.il/API6/clientsecure/redirectpage.php" method="post" target="upayIframe">
               <input type="hidden" name="email" value="SHAVIMYOTER2024@GMAIL.COM">
               <input type="hidden" name="amount" value="300">
@@ -1094,11 +1094,11 @@
         mag.addEventListener("mouseleave", function () { mag.style.transform = "translate(0,0)"; });
       }
 
-      // ---- מבצע השקה: 15.7 00:00 עד 21.7 23:59 (שעון ישראל) ----
+      // ---- מבצע השקה: עכשיו עד 21.7 23:59 (שעון ישראל) ----
       // בתוך חלון המבצע ה-JS מוריד את המחיר ל-₪200, חושף את פס המבצע והשעון ומעדכן את
       // המלל; בסוף המבצע הכל חוזר לבד. בלי JS הדף נשאר על המחיר המלא (ברירת מחדל בטוחה).
       try {
-        var PROMO_START = new Date("2026-07-15T00:00:00+03:00").getTime();
+        var PROMO_START = new Date("2026-07-13T00:00:00+03:00").getTime(); // הוקדם מ-15.7 לבקשת טום (13.07.26)
         var PROMO_END   = new Date("2026-07-21T23:59:59+03:00").getTime();
         var PROMO_PRICE = 200, FULL_PRICE = 300;
         var pEls = {
