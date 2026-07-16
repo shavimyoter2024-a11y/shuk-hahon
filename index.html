@@ -1162,8 +1162,14 @@
         var ATTRIBUTION_WEBHOOK_URL = "https://hook.eu2.make.com/mu61xo25bwjq2wojr7dzxkcldiofovrm"; // תרחיש "אירועי דף נחיתה" הייעודי
         var PAGE_ID = "shuk-hahon"; // חובה בכל ערוץ — בלי page הפנקס רושם את השורה כנדל"ן (ברירת המחדל ב-Make)
         var qs = new URLSearchParams(window.location.search);
-        var src = (qs.get("utm_source") || "").slice(0, 60);
-        var med = (qs.get("utm_medium") || "").slice(0, 60);
+        // סלחנות לקישורים ידניים: פרמטרים שהודבקו אחרי ה-# (למשל /#register?source=...)
+        // לא נחשבים query — קוראים גם משם, ומקבלים גם source/medium בלי קידומת utm_
+        try {
+          var hq = (window.location.hash.split("?")[1] || "");
+          if (hq) new URLSearchParams(hq).forEach(function (v, k) { if (!qs.has(k)) qs.set(k, v); });
+        } catch (e2) {}
+        var src = (qs.get("utm_source") || qs.get("source") || "").slice(0, 60);
+        var med = (qs.get("utm_medium") || qs.get("medium") || "").slice(0, 60);
         var utmTail = src ? "utm_source=" + encodeURIComponent(src) +
                       (med ? "&utm_medium=" + encodeURIComponent(med) : "") : "";
         if (utmTail) {
