@@ -24,7 +24,7 @@
     "description": "קורס שוק ההון לקהילת משרתי המילואים וכוחות הביטחון, בשיתוף IBI בית ההשקעות: מושגי יסוד, עקרונות השקעה, מכשירי השקעה, מערכות מסחר וסיור בחדר המסחר.",
     "provider": { "@type": "Organization", "name": "שווים יותר" },
     "offers": { "@type": "Offer", "price": "300", "priceCurrency": "ILS" },
-    "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Blended", "startDate": "2026-08-12" }
+    "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Blended", "startDate": "2026-10-05", "endDate": "2026-10-15" }
   }
   </script>
 
@@ -603,6 +603,7 @@
        animations ARE part of the product, and iPhones with Reduce Motion on were
        getting a dead page. The prefers-reduced-motion suppression was removed. */
   </style>
+  <link rel="stylesheet" href="redesign.css?v=20260901c" />
 </head>
 <body>
   <!-- the js class must exist BEFORE first paint — added at the end of the page it
@@ -615,7 +616,7 @@
       <span class="brand__name">שווים יותר<b>.</b></span>
     </a>
 
-    <div class="topbar__status"><span class="pulse"></span> <span id="topbarStatusText">המחזור מתחיל ב-12.8 · מספר המקומות מוגבל</span></div>
+    <div class="topbar__status"><span class="pulse"></span> <span id="topbarStatusText">המחזור מתחיל ב-5.10 · מספר המקומות מוגבל</span></div>
 
     <a class="btn btn-gold" href="#register">להרשמה</a>
   </header>
@@ -635,7 +636,7 @@
         </h1>
 
         <p class="hero__sub">
-          3 מפגשים שמלווים משרתי מילואים וכוחות הביטחון אל שוק ההון:
+          4 מפגשים שמלווים משרתי מילואים וכוחות הביטחון אל שוק ההון:
           מושגי היסוד, עקרונות ההשקעה ופרקטיקה במערכות מסחר אמיתיות,
           בשיתוף IBI, בית ההשקעות המוביל בישראל.
         </p>
@@ -646,12 +647,25 @@
         </div>
 
         <span class="hero__promo">🔥 מבצע השקה: ₪200 במקום ₪300 · עד 31.7</span>
+
+        <aside class="hero__proof" aria-label="עיקרי הקורס">
+          <strong>קורס ממוקד למתחילים</strong>
+          <span>✓ 4 מפגשים בלבד</span>
+          <span>✓ פרונטלי + זום</span>
+          <span>✓ הקלטות לצפייה חוזרת</span>
+          <span>✓ סיור בחדר המסחר של IBI</span>
+        </aside>
+
+        <figure class="hero__visual">
+          <img src="assets/g1.webp" width="1000" height="1333" alt="משתתפי קורס שווים יותר במפגש פרונטלי" fetchpriority="high" />
+          <figcaption><b>לא עוד הרצאה תיאורטית.</b><span>לומדים, שואלים ומתרגלים עם אנשי מקצוע.</span></figcaption>
+        </figure>
       </div>
 
       <div class="wrap hero__foot">
         <div class="stats">
-          <div class="stat"><b data-count="3">3</b><span>מפגשים</span></div>
-          <div class="stat"><b data-count="12.8">12.8</b><span>מחזור נפתח</span></div>
+          <div class="stat"><b data-count="4">4</b><span>מפגשים</span></div>
+          <div class="stat"><b>5.10</b><span>מחזור נפתח</span></div>
           <div class="stat"><b>היברידי</b><span>זום + פרונטלי</span></div>
         </div>
         <div class="scroll-cue"><span class="bar"></span> גללו למטה</div>
@@ -714,16 +728,16 @@
     <section class="section" id="syllabus">
       <div class="wrap">
         <div class="section__head">
-          <p class="eyebrow">הסילבוס · 3 מפגשים</p>
+          <p class="eyebrow">הסילבוס · 4 מפגשים</p>
           <h2 class="section__title display">מהיסודות של שוק ההון<br>עד <span class="accent">הפקודה הראשונה</span>.</h2>
-          <p class="section__lead">שלושה מפגשים שבונים את הידע שלב אחרי שלב, בשיתוף IBI, בית ההשקעות המוביל בישראל. לחצו על כל מפגש לפרטים.</p>
+          <p class="section__lead">ארבעה מפגשים שבונים את הידע שלב אחרי שלב, בשיתוף IBI, בית ההשקעות המוביל בישראל. לחצו על כל מפגש לפרטים.</p>
         </div>
 
         <div class="syl">
           <details>
             <summary>
               <span class="syl__num">01</span>
-              <span class="syl__date">12.8</span>
+              <span class="syl__date">5.10</span>
               <span class="syl__title">מבוא לעולם שוק ההון</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
@@ -736,26 +750,39 @@
           <details>
             <summary>
               <span class="syl__num">02</span>
-              <span class="syl__date">19.8</span>
+              <span class="syl__date">8.10</span>
               <span class="syl__title">עקרונות ההשקעה</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="syl__body">
               <span class="syl__badge">הרצאת זום · 19:00 עד 20:30</span>
-              <p>נכנסים לעקרונות ולפסיכולוגיה של ההשקעות: איך כסף נשחק בעו״ש מול האינפלציה ומה לא מספרים לנו על חשבון העו״ש, האלטרנטיבות של קרנות כספיות ופיקדונות, מסחר בבנקים מול בתי השקעות, היכרות עם מכשירי השקעה, ריבית דריבית וההשפעה שלה על העתיד הכלכלי שלכם, ויחס סיכוי סיכון ופיזור.</p>
+              <p>נכנסים לעקרונות ולפסיכולוגיה של ההשקעות: איך כסף נשחק בעו״ש מול האינפלציה ומה לא מספרים לנו על חשבון העו״ש, האלטרנטיבות של קרנות כספיות ופיקדונות, מסחר בבנקים מול בתי השקעות, ריבית דריבית וההשפעה שלה על העתיד הכלכלי שלכם, ויחס סיכוי סיכון ופיזור.</p>
             </div>
           </details>
 
           <details>
             <summary>
               <span class="syl__num">03</span>
-              <span class="syl__date">26.8</span>
+              <span class="syl__date">12.10</span>
+              <span class="syl__title">מכשירי ההשקעה</span>
+              <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="syl__body">
+              <span class="syl__badge">הרצאת זום · 19:00 עד 20:30</span>
+              <p>מכירים מקרוב את ארגז הכלים של המשקיע: מדדים, קרנות נאמנות וקרנות סל על היתרונות והחסרונות שלהן, קרנות כספיות, חשיפה למט״ח, ואסטרטגיות השקעה לטווח ארוך — איך בוחרים את המכשיר הנכון למטרה הנכונה ובונים תיק מפוזר.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span class="syl__num">04</span>
+              <span class="syl__date">15.10</span>
               <span class="syl__title">פרקטיקה</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
             <div class="syl__body">
               <span class="syl__badge">מפגש סיכום · זום · 19:00 עד 20:30</span>
-              <p>מתרגמים הכל למעשה: אסטרטגיות השקעה לטווח ארוך, מדדים, קרנות נאמנות וקרנות סל על היתרונות והחסרונות שלהן, חשיפה למט״ח, היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר (Market Order, Limit Order, Stop Loss, Take Profit), ניתוח גרפים ומגמות ואקטואליה פיננסית.</p>
+              <p>מתרגמים הכל למעשה: היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר (Market Order, Limit Order, Stop Loss, Take Profit), ניתוח גרפים ומגמות ואקטואליה פיננסית — עד שאתם מוכנים לפקודה הראשונה שלכם.</p>
             </div>
           </details>
         </div>
@@ -832,6 +859,9 @@
           <figure><img src="assets/g6.webp" width="1000" height="1778" alt="שקף הפתיחה של ההרצאה: שוק ההון ועולם ההשקעות לקהילת שווים יותר" loading="lazy" decoding="async"></figure>
           <figure><img src="assets/g7.webp" width="1000" height="1333" alt="המרצה מציג בפני משתתפי הקורס" loading="lazy" decoding="async"></figure>
           <figure><img src="assets/g8.webp" width="1000" height="1778" alt="משתתפי הקורס מקשיבים להרצאה" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g10.webp" width="1000" height="750" alt="המרצה מציג בפני חדר מלא במשתתפי הקורס" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g9.webp" width="1000" height="1333" alt="מבט רחב על המפגש: משתתפים סביב השולחן מול מסך ההרצאה" loading="lazy" decoding="async"></figure>
+          <figure><img src="assets/g11.webp" width="1000" height="1333" alt="שקף הפתיחה של שווים יותר על המסך בזמן ההרצאה" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </section>
@@ -858,7 +888,7 @@
             <span class="price-card__badge" id="priceBadge">מחיר מיוחד לחברי הקהילה</span>
             <div class="price-card__amount"><span class="cur">₪</span><span id="priceNow">300</span></div>
             <p class="price-card__was">מחיר מלא <s>₪300</s> · מחיר ההשקה בתוקף עד 31.7</p>
-            <p class="price-card__meta">לכל הקורס · 3 מפגשים · נפתחים ב-12.8</p>
+            <p class="price-card__meta">לכל הקורס · 4 מפגשים · נפתחים ב-5.10</p>
             <!-- טופס תשלום UPAY. מחיר חי ₪300 (בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451).
                  עד 31.7 ה-JS (בלוק "מבצע השקה") מוריד את amount ל-200 ומחזיר בסוף. -->
             <form class="pay-form" name="upayform" action="https://app.upay.co.il/API6/clientsecure/redirectpage.php" method="post" target="upayIframe">
@@ -883,7 +913,7 @@
             <p class="price-card__secure">תשלום מאובטח באמצעות UPAY</p>
           </div>
           <ul class="price-card__list">
-            <li>3 מפגשים בשיתוף IBI בית ההשקעות</li>
+            <li>4 מפגשים בשיתוף IBI בית ההשקעות</li>
             <li>הקלטות של כל המפגשים לצפייה חוזרת</li>
             <li>מפגש פתיחה פרונטלי + סיור בחדר המסחר</li>
             <li>מענה אישי לשאלות מהמרצים</li>
@@ -926,7 +956,7 @@
               <span class="faq__q">איפה ואיך מתקיימים המפגשים?</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
-            <div class="faq__body"><p>הפורמט משולב: מפגש הפתיחה פנים אל פנים במשרדי IBI במגדל שלום מאיר בתל אביב (כולל סיור בחדר המסחר), ושני המפגשים הבאים בזום. הפרטים המדויקים לכל מפגש נשלחים לנרשמים מראש.</p></div>
+            <div class="faq__body"><p>הפורמט משולב: מפגש הפתיחה פנים אל פנים במשרדי IBI במגדל שלום מאיר בתל אביב (כולל סיור בחדר המסחר), ושלושת המפגשים הבאים בזום. הפרטים המדויקים לכל מפגש נשלחים לנרשמים מראש.</p></div>
           </details>
           <details>
             <summary>
@@ -940,7 +970,7 @@
               <span class="faq__q">כמה עולה הקורס ומה כלול במחיר?</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
-            <div class="faq__body"><p id="faqPrice">₪300 לחברי הקהילה, לכל הקורס: 3 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY).</p></div>
+            <div class="faq__body"><p id="faqPrice">₪300 לחברי הקהילה, לכל הקורס: 4 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY).</p></div>
           </details>
           <details>
             <summary>
@@ -974,7 +1004,7 @@
       </div>
       <div class="footer__base">
         <span>© 2026 שווים יותר · כל הזכויות שמורות</span>
-        <span>קורס שוק ההון · ההרשמה למחזור 12.8 פתוחה</span>
+        <span>קורס שוק ההון · ההרשמה למחזור 5.10 פתוחה</span>
       </div>
     </div>
   </footer>
