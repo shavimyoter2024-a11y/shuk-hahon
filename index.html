@@ -23,7 +23,7 @@
     "name": "קורס שוק ההון · שווים יותר",
     "description": "קורס שוק ההון לקהילת משרתי המילואים וכוחות הביטחון, בשיתוף IBI בית ההשקעות: מושגי יסוד, עקרונות השקעה, מכשירי השקעה, מערכות מסחר וסיור בחדר המסחר.",
     "provider": { "@type": "Organization", "name": "שווים יותר" },
-    "offers": { "@type": "Offer", "price": "300", "priceCurrency": "ILS" },
+    "offers": { "@type": "Offer", "price": "400", "priceCurrency": "ILS" },
     "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "Blended", "startDate": "2026-10-05", "endDate": "2026-10-15" }
   }
   </script>
@@ -886,14 +886,14 @@
         <div class="price-card">
           <div class="price-card__main">
             <span class="price-card__badge" id="priceBadge">מחיר מיוחד לחברי הקהילה</span>
-            <div class="price-card__amount"><span class="cur">₪</span><span id="priceNow">300</span></div>
+            <div class="price-card__amount"><span class="cur">₪</span><span id="priceNow">400</span></div>
             <p class="price-card__was">מחיר מלא <s>₪300</s> · מחיר ההשקה בתוקף עד 31.7</p>
             <p class="price-card__meta">לכל הקורס · 4 מפגשים · נפתחים ב-5.10</p>
-            <!-- טופס תשלום UPAY. מחיר חי ₪300 (בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451).
+            <!-- טופס תשלום UPAY. מחיר חי ₪400 ממחזור אוקטובר (01.09.26); בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451.
                  עד 31.7 ה-JS (בלוק "מבצע השקה") מוריד את amount ל-200 ומחזיר בסוף. -->
             <form class="pay-form" name="upayform" action="https://app.upay.co.il/API6/clientsecure/redirectpage.php" method="post" target="upayIframe">
               <input type="hidden" name="email" value="SHAVIMYOTER2024@GMAIL.COM">
-              <input type="hidden" name="amount" value="300">
+              <input type="hidden" name="amount" value="400">
               <input type="hidden" name="returnurl" value="https://shavimyoter2024-a11y.github.io/shuk-hahon/pay-return.html">
               <input type="hidden" name="ipnurl" value="">
               <input type="hidden" name="paymentdetails" value="קורס שוק ההון שווים יותר">
@@ -970,7 +970,7 @@
               <span class="faq__q">כמה עולה הקורס ומה כלול במחיר?</span>
               <svg class="syl__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </summary>
-            <div class="faq__body"><p id="faqPrice">₪300 לחברי הקהילה, לכל הקורס: 4 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY).</p></div>
+            <div class="faq__body"><p id="faqPrice">₪400 לחברי הקהילה, לכל הקורס: 4 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY).</p></div>
           </details>
           <details>
             <summary>
@@ -1130,7 +1130,7 @@
       try {
         var PROMO_START = new Date("2026-07-13T00:00:00+03:00").getTime(); // הוקדם מ-15.7 לבקשת טום (13.07.26)
         var PROMO_END   = new Date("2026-07-31T12:00:00+03:00").getTime();
-        var PROMO_PRICE = 200, FULL_PRICE = 300;
+        var PROMO_PRICE = 200, FULL_PRICE = 400;
         var pEls = {
           amount: document.querySelector('.pay-form input[name="amount"]'),
           priceNow: document.getElementById("priceNow"),
