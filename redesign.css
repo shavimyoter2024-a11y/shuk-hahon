@@ -134,7 +134,8 @@ body.js:not(.no-gsap) .hero__title .line>span { transform:none !important; }
 .promo-count .pc span { color:rgba(255,255,255,.72); }
 .price-card__amount .cur { color:var(--action); }
 .promo-strip__title b { color:var(--action-hover); }
-.price-card__was s { color:var(--text-soft); text-decoration-color:var(--action); }
+.price-card__was { color:var(--ink); font-size:17px; }
+.price-card__was s { color:var(--ink); font-weight:800; font-size:20px; text-decoration:line-through; text-decoration-color:var(--action); text-decoration-thickness:2.5px; }
 .price-card { max-width:860px; margin-inline:auto; display:grid; grid-template-columns:1.05fr .95fr; color:var(--text); background:#fff; border:1px solid var(--border); border-radius:26px; box-shadow:0 24px 70px rgba(11,31,51,.13); overflow:hidden; }
 .price-card__main { padding:42px; }
 .price-card__badge { display:inline-flex; color:#075d80; background:var(--blue-soft); border-radius:999px; padding:7px 12px; font-weight:800; }
