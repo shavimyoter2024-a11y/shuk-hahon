@@ -11,6 +11,10 @@
   <meta property="og:description" content="מהשטח לשוק ההון: קורס בשיתוף IBI לקהילת משרתי המילואים וכוחות הביטחון." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="he_IL" />
+  <meta property="og:image" content="https://shavimyoter2024-a11y.github.io/shuk-hahon/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://shavimyoter2024-a11y.github.io/shuk-hahon/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -678,7 +682,7 @@
       <div class="wrap">
         <div class="section__head">
           <p class="eyebrow">למי זה מתאים</p>
-          <h2 class="section__title display">הקורס הזה נבנה <span class="accent">בשבילך.</span></h2>
+          <h2 class="section__title display">הקורס הזה נבנה <span class="accent">בשבילכם.</span></h2>
           <p class="section__lead">בין אם אתם לפני ההשקעה הראשונה או שהכסף פשוט שוכב בעו״ש, הקורס לוקח אתכם מאפס ידע ועד ביטחון בשוק.</p>
         </div>
         <div class="aud-grid">
@@ -769,7 +773,7 @@
             </summary>
             <div class="syl__body">
               <span class="syl__badge">יום שלישי · הרצאת זום · 19:00 עד 20:30</span>
-              <p>מכירים מקרוב את ארגז הכלים של המשקיע: מדדים, קרנות נאמנות וקרנות סל על היתרונות והחסרונות שלהן, קרנות כספיות, חשיפה למט״ח, ואסטרטגיות השקעה לטווח ארוך — איך בוחרים את המכשיר הנכון למטרה הנכונה ובונים תיק מפוזר.</p>
+              <p>מכירים מקרוב את ארגז הכלים של המשקיע: מדדים, קרנות נאמנות וקרנות סל על היתרונות והחסרונות שלהן, קרנות כספיות, חשיפה למט״ח, ואסטרטגיות השקעה לטווח ארוך: איך בוחרים את המכשיר הנכון למטרה הנכונה ובונים תיק מפוזר.</p>
             </div>
           </details>
 
@@ -782,7 +786,7 @@
             </summary>
             <div class="syl__body">
               <span class="syl__badge">יום חמישי · מפגש סיכום · זום · 19:00 עד 20:30</span>
-              <p>מתרגמים הכל למעשה: היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר (Market Order, Limit Order, Stop Loss, Take Profit), ניתוח גרפים ומגמות ואקטואליה פיננסית — עד שאתם מוכנים לפקודה הראשונה שלכם.</p>
+              <p>מתרגמים הכל למעשה: היכרות עם מערכות המסחר SPARK, ‏IBI SMART ו-NEXTGEN, פקודות מסחר (Market Order, Limit Order, Stop Loss, Take Profit), ניתוח גרפים ומגמות ואקטואליה פיננסית, עד שאתם מוכנים לפקודה הראשונה שלכם.</p>
             </div>
           </details>
         </div>
@@ -1123,6 +1127,22 @@
         });
         mag.addEventListener("mouseleave", function () { mag.style.transform = "translate(0,0)"; });
       }
+
+      // ---- GA4: זרם "דפי נחיתה" בנכס 531302871, משותף לכל הדפים (סקיל landing-page, wiring.md סעיף 8) ----
+      (function () {
+        var GA4_ID = "G-NR923MZ0BW";
+        var g = document.createElement("script");
+        g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4_ID;
+        document.head.appendChild(g);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag("js", new Date()); window.gtag("config", GA4_ID, { page_id: "shuk-hahon" });
+        // לחיצה על כפתור תשלום (כרטיס / ביט / דף נפרד) = התחלת רכישה
+        document.addEventListener("click", function (e) {
+          var b = e.target.closest && e.target.closest(".pay-submit, .pay-bit, .pay-fallback");
+          if (b) try { window.gtag("event", "begin_checkout", { page_id: "shuk-hahon", currency: "ILS" }); } catch (err) {}
+        });
+      })();
 
       // ---- מבצע השקה מחזור אוקטובר: שני 14.9 12:00 עד שלישי 6.10 23:59 (שעון ישראל; הוארך לבקשת טום 22.09.26 ושוב 30.09.26) ----
       // בתוך חלון המבצע ה-JS מוריד את המחיר ל-₪300, חושף את פס המבצע והשעון ומעדכן את
