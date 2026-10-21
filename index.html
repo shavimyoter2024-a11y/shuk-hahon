@@ -603,13 +603,39 @@
       .btn-line { text-align: center; }
     }
 
-    /* NOTE: motion runs for everyone — Tom's explicit call (09.07.26): the page's
-       animations ARE part of the product, and iPhones with Reduce Motion on were
-       getting a dead page. The prefers-reduced-motion suppression was removed. */
+    /* הפחתת תנועה (החלטת טום 20.10.26, מחליפה את "תנועה תמיד" מ-09.07): מי שביקש
+       בטלפון "הפחתת תנועה" מקבל דהייה קצרה במקום תזוזה, לא דף מת. כל השאר בלי שינוי. */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      body.js .rv, body.js .rv.in,
+      body.js .aud-card.rv:nth-child(odd), body.js .aud-card.rv:nth-child(even),
+      body.js .mentor-card.rv:nth-child(odd), body.js .mentor-card.rv:nth-child(even),
+      body.js .bubble.rv, body.js .chat-screen.rv.in {
+        transform: none !important; transition: opacity .4s ease !important; transition-delay: 0s !important;
+      }
+      body.js .gal figure.rv img { transform: none !important; transition: none !important; }
+      body.js .section__head.rv .eyebrow::before { transition: none !important; }
+      .marquee__track, .scroll-cue .bar::after, .mobile-cta .btn::after, .pulse { animation: none !important; }
+      .btn, .btn-gold:hover { transition: background .2s ease !important; transform: none !important; }
+    }
+
+    /* דילוג לתוכן + הודעת תשלום שנכשל + קישורי המסמכים בפוטר */
+    .skip { position: absolute; inset-inline-start: 16px; top: -80px; z-index: 100; background: #0b1f33; color: #fff; padding: 10px 18px; border-radius: 10px; font-weight: 700; }
+    .skip:focus { top: 12px; }
+    .pay-failed { max-width: 640px; margin: 0 auto 22px; padding: 18px 20px; border-radius: 14px; background: #fff0e8; border: 1px solid #f3b79c; color: #5a2410; text-align: center; }
+    .pay-failed[hidden] { display: none; }
+    .pay-failed strong { display: block; font-size: 19px; margin-bottom: 4px; color: #0b1f33; }
+    .pay-failed p { margin: 0; line-height: 1.55; }
+    .pay-failed a { color: #a34420; font-weight: 700; }
+    /* ניגודיות AA: לבן על הכתום עובר רק כטקסט גדול (3.3:1), אז הכפתורים הקטנים מוגדלים ל-19px מודגש */
+    .topbar .btn-gold, .mobile-cta .btn { font-size: 19px; }
+    .legal-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 22px; }
+    .legal-nav a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
   </style>
   <link rel="stylesheet" href="redesign.css?v=20260914c" />
 </head>
 <body>
+  <a class="skip" href="#main">דילוג לתוכן</a>
   <!-- the js class must exist BEFORE first paint — added at the end of the page it
        caused a visible flash: content painted, then hid, then animated back in -->
   <script>document.body.classList.add("js");</script>
@@ -626,7 +652,7 @@
   </header>
 
   <!-- HERO -->
-  <main>
+  <main id="main">
     <section class="hero" id="top">
       <span class="hero__mark display" aria-hidden="true">שוק ההון</span>
       <span class="hero__edge">קורס שוק ההון · שווים יותר</span>
@@ -875,6 +901,12 @@
       <div class="wrap">
         <h2 class="sr-only">הרשמה ותשלום</h2>
 
+        <!-- pay-return.html מחזיר לכאן עם ?payment=failed כש-UPAY מדווח על כישלון -->
+        <div class="pay-failed" id="payFailed" role="alert" tabindex="-1" hidden>
+          <strong>התשלום לא הושלם</strong>
+          <p>אפשר לנסות שוב כאן למטה או לשלם בביט. אם משהו לא מסתדר, או שנראה לכם שחויבתם, כתבו לנו בוואטסאפ <a href="https://wa.me/972587929195" target="_blank" rel="noopener" dir="ltr">058-792-9195</a> ונסדר את זה.</p>
+        </div>
+
         <!-- פס מבצע ההשקה — נחשף אוטומטית ע"י ה-JS רק בתוך חלון המבצע (14.9 12:00 – 6.10 23:59) -->
         <div class="promo-strip">
           <div class="promo-strip__title">🔥 מבצע השקה: הקורס ב-<b>₪300</b> במקום ₪400</div>
@@ -1006,6 +1038,9 @@
           <p><a href="mailto:shavimyoter2024@gmail.com">shavimyoter2024@gmail.com</a></p>
         </div>
       </div>
+      <nav class="legal-nav" aria-label="מסמכים">
+        <a href="terms.html">תנאי שימוש</a><a href="privacy.html">מדיניות פרטיות</a><a href="accessibility.html">הצהרת נגישות</a>
+      </nav>
       <div class="footer__base">
         <span>© 2026 שווים יותר · כל הזכויות שמורות</span>
         <span>קורס שוק ההון · ההרשמה למחזור 1.12 פתוחה</span>
@@ -1020,12 +1055,13 @@
     </div>
   </div>
 
-  <div class="mobile-cta"><a class="btn btn-gold" href="#register" id="mobileCtaBtn">להרשמה לקורס</a></div>
+  <div class="mobile-cta" role="complementary" aria-label="הרשמה מהירה"><a class="btn btn-gold" href="#register" id="mobileCtaBtn">להרשמה לקורס</a></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script>
     (function () {
-      var reduce = false; // תנועה תמיד — החלטת טום 09.07.26 (Reduce Motion באייפון השאיר דף מת)
+      // הפחתת תנועה: בלי timeline/פרלקסה/כפתור מגנטי; ה-CSS נותן דהייה קצרה (החלטת טום 20.10.26)
+      var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
       if (window.gsap && !reduce) {
         // the hero starts CSS-hidden (no flash-then-jump) — animate TO the final state
         var tl = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -1074,7 +1110,7 @@
 
       // gentle scroll parallax on phones: the chat screen drifts a little against
       // the scroll (gallery excluded — transforms inside CSS columns flicker on Safari)
-      if (window.matchMedia("(pointer: coarse)").matches) {
+      if (window.matchMedia("(pointer: coarse)").matches && !reduce) {
         var plx = Array.prototype.slice.call(document.querySelectorAll(".chat-screen"));
         if (plx.length) {
           var pticking = false;
@@ -1127,6 +1163,19 @@
         });
         mag.addEventListener("mouseleave", function () { mag.style.transform = "translate(0,0)"; });
       }
+
+      // ---- תשלום שנכשל: pay-return.html שולח לכאן עם ?payment=failed#register ----
+      (function () {
+        try {
+          if (new URLSearchParams(location.search).get("payment") !== "failed") return;
+          var box = document.getElementById("payFailed");
+          if (!box) return;
+          box.hidden = false;
+          setTimeout(function () { box.scrollIntoView({ block: "center" }); box.focus({ preventScroll: true }); }, 300);
+          var send = function () { try { window.gtag && window.gtag("event", "payment_failed", { page_id: "shuk-hahon" }); } catch (e) {} };
+          setTimeout(send, 1500);
+        } catch (e) {}
+      })();
 
       // ---- GA4: זרם "דפי נחיתה" בנכס 531302871, משותף לכל הדפים (סקיל landing-page, wiring.md סעיף 8) ----
       (function () {
