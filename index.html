@@ -273,7 +273,7 @@
     .pay-bit:hover { border-color: var(--gold); color: var(--gold-soft); }
     @media (pointer: coarse) { .pay-bit:active { border-color: var(--gold); color: var(--gold-soft); } }
 
-    /* promo (25.10–29.10) — ה-JS מדליק body.promo-on רק בתוך חלון המבצע;
+    /* promo (25.10–5.11 18:00) — ה-JS מדליק body.promo-on רק בתוך חלון המבצע;
        בלי JS הדף נשאר בבטחה על המחיר המלא */
     .promo-strip {
       display: none; margin-bottom: 22px; padding: 26px 22px 22px; text-align: center;
@@ -676,7 +676,7 @@
           <a class="btn btn-line" href="#syllabus">לצפייה בסילבוס&nbsp;↓</a>
         </div>
 
-        <span class="hero__promo">🔥 הטבה: ₪300 במקום ₪400 · עד 29.10</span>
+        <span class="hero__promo">🔥 הטבה: ₪300 במקום ₪400 · עד 5.11 ב-18:00</span>
 
         <aside class="hero__proof" aria-label="עיקרי הקורס">
           <strong>קורס ממוקד למתחילים</strong>
@@ -907,7 +907,7 @@
           <p>אפשר לנסות שוב כאן למטה או לשלם בביט. אם משהו לא מסתדר, או שנראה לכם שחויבתם, כתבו לנו בוואטסאפ <a href="https://wa.me/972587929195" target="_blank" rel="noopener" dir="ltr">058-792-9195</a> ונסדר את זה.</p>
         </div>
 
-        <!-- פס הטבה: נחשף אוטומטית ע"י ה-JS רק בתוך חלון ההטבה (25.10 עד 29.10 23:59) -->
+        <!-- פס הטבה: נחשף אוטומטית ע"י ה-JS רק בתוך חלון ההטבה (25.10 עד 5.11 18:00) -->
         <div class="promo-strip">
           <div class="promo-strip__title">🔥 הטבה: הקורס ב-<b>₪300</b> במקום ₪400</div>
           <div class="promo-count" aria-hidden="true">
@@ -916,17 +916,17 @@
             <div class="pc"><b id="pcMins">00</b><span>דקות</span></div>
             <div class="pc"><b id="pcSecs">00</b><span>שניות</span></div>
           </div>
-          <div class="promo-strip__sub">ההטבה מסתיימת ביום חמישי 29.10 בחצות, ואז המחיר חוזר ל-₪400</div>
+          <div class="promo-strip__sub">ההטבה מסתיימת ביום חמישי 5.11 בשעה 18:00, ואז המחיר חוזר ל-₪400</div>
         </div>
 
         <div class="price-card">
           <div class="price-card__main">
             <span class="price-card__badge" id="priceBadge">מחיר מיוחד לחברי הקהילה</span>
             <div class="price-card__amount"><span class="cur">₪</span><span id="priceNow">400</span></div>
-            <p class="price-card__was">מחיר מלא <s>₪400</s> · ההטבה בתוקף עד 29.10</p>
+            <p class="price-card__was">מחיר מלא <s>₪400</s> · ההטבה בתוקף עד 5.11 ב-18:00</p>
             <p class="price-card__meta">לכל הקורס · 4 מפגשים · נפתחים ב-1.12</p>
             <!-- טופס תשלום UPAY. מחיר חי ₪400 ממחזור אוקטובר (01.09.26); בדיקת ₪1 E2E עברה 10.07.26, עסקה 186051451.
-                 בחלון ההטבה 25.10 עד 29.10 ה-JS (בלוק "הטבה") מוריד את amount ל-300 ומחזיר בסוף. -->
+                 בחלון ההטבה 25.10 עד 5.11 18:00 ה-JS (בלוק "הטבה") מוריד את amount ל-300 ומחזיר בסוף. -->
             <form class="pay-form" name="upayform" action="https://app.upay.co.il/API6/clientsecure/redirectpage.php" method="post" target="upayIframe">
               <input type="hidden" name="email" value="SHAVIMYOTER2024@GMAIL.COM">
               <input type="hidden" name="amount" value="400">
@@ -1193,12 +1193,12 @@
         });
       })();
 
-      // ---- הטבה מחזור דצמבר: ראשון 25.10 עד חמישי 29.10 23:59 (שעון חורף +02:00; בקשת טום 25.10.26) ----
+      // ---- הטבה מחזור דצמבר: ראשון 25.10 עד חמישי 5.11 18:00 (שעון חורף +02:00; בקשת טום 25.10.26, הוארך 29.10.26) ----
       // בתוך חלון המבצע ה-JS מוריד את המחיר ל-₪300, חושף את פס המבצע והשעון ומעדכן את
       // המלל; בסוף המבצע הכל חוזר לבד ל-₪400. בלי JS הדף נשאר על המחיר המלא (ברירת מחדל בטוחה).
       try {
         var PROMO_START = new Date("2026-10-25T00:00:00+02:00").getTime();
-        var PROMO_END   = new Date("2026-10-29T23:59:59+02:00").getTime();
+        var PROMO_END   = new Date("2026-11-05T18:00:00+02:00").getTime();
         var PROMO_PRICE = 300, FULL_PRICE = 400;
         var pEls = {
           amount: document.querySelector('.pay-form input[name="amount"]'),
@@ -1234,10 +1234,10 @@
           if (pEls.amount) pEls.amount.value = String(on ? PROMO_PRICE : FULL_PRICE);
           if (pEls.priceNow) pEls.priceNow.textContent = String(on ? PROMO_PRICE : FULL_PRICE);
           if (pEls.badge) pEls.badge.textContent = on ? "🔥 הטבה לזמן מוגבל" : pSaved.badge;
-          if (pEls.topbar) pEls.topbar.textContent = on ? "הטבה עד 29.10: ₪300 במקום ₪400" : pSaved.topbar;
+          if (pEls.topbar) pEls.topbar.textContent = on ? "הטבה עד 5.11: ₪300 במקום ₪400" : pSaved.topbar;
           if (pEls.mobileCta) pEls.mobileCta.textContent = on ? "להרשמה בהטבה · ₪300" : pSaved.mobileCta;
           if (pEls.faq) pEls.faq.textContent = on
-            ? "הטבה עד 29.10: ₪300 במקום ₪400 לחברי הקהילה, לכל הקורס: 4 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY)."
+            ? "הטבה עד 5.11: ₪300 במקום ₪400 לחברי הקהילה, לכל הקורס: 4 מפגשים, הקלטות של כל המפגשים, מפגש פתיחה פרונטלי עם סיור בחדר המסחר ומענה מהמרצים. משלמים כאן בדף, בתשלום מאובטח (UPAY)."
             : pSaved.faq;
           if (on && !pTick) { tickFn(); pTick = setInterval(tickFn, 1000); }
           if (!on && pTick) { clearInterval(pTick); pTick = null; }
