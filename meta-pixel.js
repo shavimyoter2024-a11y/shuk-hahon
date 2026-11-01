@@ -95,6 +95,26 @@
   try {
     (window.dataLayer || []).forEach(function (a) { if (a && a[0] === "event" && a[1] === "purchase") onGa(a); });
   } catch (e) {}
+  /* אתרים עם GTM דוחפים {event: "generate_lead"} ל-dataLayer במקום לקרוא ל-gtag */
+  try {
+    var dl = window.dataLayer = window.dataLayer || [], push = dl.push;
+    dl.push = function () {
+      try { for (var i = 0; i < arguments.length; i++) { var o = arguments[i]; if (o && typeof o.event === "string" && !o.length) onGa(["event", o.event, o]); } } catch (e) {}
+      return push.apply(this, arguments);
+    };
+  } catch (e) {}
+
+  /* דף בלי אירוע ליד משלו: data-lead-success="#id" = הודעת התודה; כשהיא נחשפת יוצא Lead (פעם אחת) */
+  if (opt.leadSuccess) {
+    var fired = false;
+    var check = function () {
+      var el = document.querySelector(opt.leadSuccess);
+      if (!fired && el && !el.hidden && el.offsetParent !== null) { fired = true; track("Lead"); }
+    };
+    var start = function () { try { new MutationObserver(check).observe(document.body, { attributes: true, subtree: true, attributeFilter: ["hidden", "class", "style"] }); } catch (e) {} };
+    if (document.body) start(); else document.addEventListener("DOMContentLoaded", start);
+  }
+
   var tries = 0;
   (function wrap() {
     var g = window.gtag;
