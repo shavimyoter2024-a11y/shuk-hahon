@@ -238,3 +238,26 @@ body.js:not(.no-gsap) .hero__title .line>span { transform:none !important; }
   .syl summary { padding-inline:10px; }
   .syl__body { padding-inline:52px 12px; }
 }
+/* "תחזרו אליי" בתחתית כרטיס המחיר (03.11.26) */
+.cb { grid-column:1 / -1; background:var(--canvas); border-top:1px solid var(--border); padding:30px 42px 34px; }
+.cb__form { max-width:520px; margin-inline:auto; display:flex; flex-direction:column; gap:12px; }
+.cb__or { margin:0; text-align:center; color:var(--blue-deep); font-size:15px; font-weight:800; }
+.cb__title { margin:0; text-align:center; color:var(--ink); font-size:22px; font-weight:800; line-height:1.25; }
+.cb__sub { margin:-6px 0 4px; text-align:center; color:var(--text-soft); font-size:16px; }
+.cb__row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.cb__field { display:flex; flex-direction:column; gap:5px; color:var(--ink); font-size:14px; font-weight:700; }
+.cb__field input { height:50px; padding:0 14px; border:1.5px solid var(--border); border-radius:12px; background:#fff; color:var(--text); font-family:inherit; font-size:16px; font-weight:400; }
+.cb__field input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+.cb__field input[type="tel"] { text-align:right; }
+.cb__field input::placeholder { color:#6b7f8e; }
+.cb__hp { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; inset-inline-start:-9999px; }
+.cb__btn { min-height:52px; border:1.5px solid var(--ink); border-radius:12px; background:#fff; color:var(--ink); font-family:inherit; font-size:17px; font-weight:800; cursor:pointer; }
+.cb__btn:hover { background:var(--ink); color:#fff; }
+.cb__btn[disabled] { opacity:.6; cursor:default; background:#fff; color:var(--ink); }
+.cb__note { margin:0; text-align:center; color:var(--text-soft); font-size:13px; }
+.cb__msg { margin:0; text-align:center; color:var(--ink); font-size:16px; font-weight:800; }
+.cb__msg:empty { display:none; }
+.cb__msg.err { color:#a12a1f; }
+.cb--done .cb__row, .cb--done .cb__btn, .cb--done .cb__note, .cb--done .cb__sub { display:none; }
+@media (max-width:820px) { .cb { padding:26px 24px 30px; } }
+@media (max-width:520px) { .cb__row { grid-template-columns:1fr; } }

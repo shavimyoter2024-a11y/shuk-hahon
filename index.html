@@ -632,7 +632,7 @@
     .legal-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 22px; }
     .legal-nav a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
   </style>
-  <link rel="stylesheet" href="redesign.css?v=20260914c" />
+  <link rel="stylesheet" href="redesign.css?v=20261103a" />
 </head>
 <body>
   <a class="skip" href="#main">דילוג לתוכן</a>
@@ -954,6 +954,26 @@
             <li>מפגש פתיחה פרונטלי + סיור בחדר המסחר</li>
             <li>מענה אישי לשאלות מהמרצים</li>
           </ul>
+          <!-- "תחזרו אליי" (03.11.26, כמו בנדל"ן): נשלח ל-Worker shavim-links, שפותח התעניינות לאוריאל בפיירברי -->
+          <div class="cb">
+            <form class="cb__form" id="cbForm" novalidate>
+              <p class="cb__or">עוד מתלבטים?</p>
+              <p class="cb__title">נשמח לענות על כל שאלה</p>
+              <p class="cb__sub">השאירו פרטים ונחזור אליכם עוד היום</p>
+              <div class="cb__row">
+                <label class="cb__field">שם
+                  <input type="text" name="name" autocomplete="name" required maxlength="80">
+                </label>
+                <label class="cb__field">טלפון
+                  <input type="tel" name="phone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="05X-XXXXXXX" required maxlength="20">
+                </label>
+              </div>
+              <input class="cb__hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <button type="submit" class="cb__btn">תחזרו אליי</button>
+              <p class="cb__note">בלי התחייבות</p>
+              <p class="cb__msg" id="cbMsg" role="status" aria-live="polite"></p>
+            </form>
+          </div>
         </div>
 
         <!-- חלון תשלום מוטמע — נטען לתוך ה-iframe בלחיצה על הכפתור -->
@@ -1333,6 +1353,40 @@
           });
         }
       } catch (e) {}
+
+      // "תחזרו אליי": שליחה ל-Worker (text/plain = בלי בקשת preflight), שם ההתעניינות נפתחת לאוריאל
+      var cbForm = document.getElementById("cbForm");
+      if (cbForm) {
+        var cbStarted = false;
+        cbForm.addEventListener("focusin", function () {
+          if (cbStarted) return; cbStarted = true;
+          try { if (window.gtag) window.gtag("event", "form_start", { form: "callback", page_id: "shuk-hahon" }); } catch (e4) {}
+        });
+        cbForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var msg = document.getElementById("cbMsg"), btn = cbForm.querySelector(".cb__btn");
+          var name = cbForm.elements["name"].value.trim(), phone = cbForm.elements["phone"].value.replace(/\D/g, "");
+          msg.className = "cb__msg";
+          if (name.length < 2) { msg.className += " err"; msg.textContent = "כתבו את השם שלכם"; cbForm.elements["name"].focus(); return; }
+          if (!/^0?5\d{8}$|^9725\d{8}$/.test(phone)) { msg.className += " err"; msg.textContent = "בדקו את מספר הטלפון"; cbForm.elements["phone"].focus(); return; }
+          var q = new URLSearchParams(window.location.search);
+          btn.disabled = true; msg.textContent = "שולחים…";
+          fetch("https://go.shavimyoter.co/api/lp/callback", {
+            method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            body: JSON.stringify({ page: "shuk-hahon", name: name, phone: phone, website: cbForm.elements["website"].value,
+              utm_source: q.get("utm_source") || q.get("source") || "", utm_medium: q.get("utm_medium") || q.get("medium") || "" })
+          }).then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.ok) throw new Error(d.error || r.status); }); })
+            .then(function () {
+              cbForm.classList.add("cb--done");
+              msg.textContent = "תודה! נחזור אליכם עוד היום";
+              try { if (window.gtag) window.gtag("event", "generate_lead", { form: "callback", page_id: "shuk-hahon" }); } catch (e5) {}
+            })
+            .catch(function () {
+              btn.disabled = false; msg.className += " err";
+              msg.textContent = "לא הצלחנו לשלוח. נסו שוב בעוד רגע";
+            });
+        });
+      }
 
       // embedded UPAY checkout: card payments stay inside the branded in-page iframe
       // on every device. Bit can't open its app from inside an iframe (white page),
