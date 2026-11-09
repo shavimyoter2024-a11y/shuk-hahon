@@ -1,4 +1,4 @@
-/* meta-pixel.js: הפיקסל של מטא + Conversions API לכל דפי הנחיתה של שווים יותר (29/10/2026).
+/* meta-pixel.js (כולל באנר עוגיות מ-09/11): הפיקסל של מטא + Conversions API לכל דפי הנחיתה של שווים יותר (29/10/2026).
    שורה אחת לפני </body>, אחרי ה-gtag של הדף:
      <script src="meta-pixel.js" data-pixel="884771924261911" data-page="nadlan" defer></script>
    מה הוא עושה:
@@ -17,6 +17,128 @@
   var PIXEL = opt.pixel || "884771924261911";
   var CAPI = opt.capi || "https://go.shavimyoter.co/api/capi";
   var PAGE = opt.page || location.pathname.split("/").filter(Boolean)[0] || "home";
+
+  /* ===== באנר יידוע על עוגיות (09/11/2026, טום) =====
+     מודל יידוע עם אפשרות סירוב: עד שבוחרים הפיקסל עובד כרגיל.
+     "לא מאשרים" = הפיקסל נעצר מיד ולא נטען בביקורים הבאים, ו-Google Analytics עובר למצב בלי עוגיות.
+     הבחירה נשמרת בדפדפן (localStorage "sy_consent") ומשותפת לכל הדפים באותו דומיין.
+     הבחירה נשלחת ל-GA כאירוע consent_choice, כדי לדעת כמה מסרבים. */
+  var CONSENT_KEY = "sy_consent";
+  var refused = false;
+  function getChoice() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
+  function setChoice(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {} }
+  function denyGa() {
+    try {
+      /* gtag.js קורא רק אובייקט arguments מה-dataLayer, לא מערך רגיל */
+      window.dataLayer = window.dataLayer || [];
+      (function () { window.dataLayer.push(arguments); })("consent", "update",
+        { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+    } catch (e) {}
+  }
+  function gaEvent(choice) {
+    try { if (typeof window.gtag === "function") window.gtag("event", "consent_choice", { choice: choice, page_id: PAGE }); } catch (e) {}
+  }
+
+  function privacyHref() {
+    if (opt.privacy) return opt.privacy;
+    var a = document.querySelector('a[href*="privacy"]');
+    return a ? a.getAttribute("href") : "";
+  }
+
+  /* גובה של פס קבוע בתחתית המסך (כפתור דביק במובייל), כדי שהבאנר יישב מעליו ולא יסתיר אותו */
+  function bottomBar(banner) {
+    var h = 0, vh = window.innerHeight, xs = [window.innerWidth / 2, 24, window.innerWidth - 24];
+    for (var i = 0; i < xs.length; i++) {
+      var els = document.elementsFromPoint ? document.elementsFromPoint(xs[i], vh - 2) : [];
+      for (var j = 0; j < els.length; j++) {
+        for (var el = els[j]; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
+          if (el === banner || banner.contains(el)) break;
+          var pos = getComputedStyle(el).position;
+          if (pos === "fixed" || pos === "sticky") {
+            var r = el.getBoundingClientRect();
+            if (r.bottom >= vh - 4 && r.height < vh * 0.4) h = Math.max(h, vh - r.top);
+            break;
+          }
+        }
+      }
+    }
+    return h;
+  }
+
+  function showBanner() {
+    if (document.getElementById("sy-consent")) return;
+    var css = document.createElement("style");
+    css.textContent =
+      "#sy-consent{position:fixed;inset-inline:12px;bottom:12px;z-index:2147483000;max-width:760px;margin:0 auto;" +
+      "display:flex;align-items:center;gap:14px 18px;padding:14px 16px;background:#fff;color:#1d2433;" +
+      "border:1px solid #c9ced8;border-radius:12px;font:inherit;font-size:15px;line-height:1.45;direction:rtl;text-align:right}" +
+      "#sy-consent p{margin:0;flex:1 1 auto}" +
+      "#sy-consent a{color:inherit;text-decoration:underline;text-underline-offset:2px}" +
+      "#sy-consent .sy-btns{display:flex;gap:8px;flex:none}" +
+      "#sy-consent button{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 18px;border-radius:9px;cursor:pointer;" +
+      "border:1px solid #1d2433;box-shadow:0 2px 0 #1d2433;transition:transform .08s,box-shadow .08s}" +
+      "#sy-consent button:active{transform:translateY(2px);box-shadow:0 0 0 #1d2433}" +
+      "#sy-consent .sy-yes{background:#1d2433;color:#fff;box-shadow:0 2px 0 #000}" +
+      "#sy-consent .sy-no{background:#fff;color:#1d2433}" +
+      "#sy-consent button:focus-visible{outline:3px solid #2f6fed;outline-offset:2px}" +
+      "@media (max-width:640px){#sy-consent{flex-direction:column;text-align:center;font-size:14px;padding:12px 14px;gap:10px}" +
+      "#sy-consent .sy-btns{width:100%}#sy-consent button{flex:1 1 0}}" +
+      "@media (prefers-reduced-motion:reduce){#sy-consent button{transition:none}}" +
+      "@media print{#sy-consent{display:none}}";
+    document.head.appendChild(css);
+
+    var box = document.createElement("div");
+    box.id = "sy-consent";
+    box.setAttribute("role", "region");
+    box.setAttribute("aria-label", "הודעה על עוגיות");
+    box.setAttribute("dir", "rtl");
+    box.setAttribute("lang", "he");
+    var p = document.createElement("p");
+    p.appendChild(document.createTextNode("אנחנו משתמשים בעוגיות ובפיקסל של Meta כדי למדוד ביקורים ולשפר את הפרסום. "));
+    var href = privacyHref();
+    if (href) {
+      var a = document.createElement("a");
+      a.href = href;
+      a.textContent = "למדיניות הפרטיות";
+      p.appendChild(a);
+    }
+    var btns = document.createElement("div");
+    btns.className = "sy-btns";
+    var yes = document.createElement("button");
+    yes.type = "button"; yes.className = "sy-yes"; yes.textContent = "מאשרים";
+    var no = document.createElement("button");
+    no.type = "button"; no.className = "sy-no"; no.textContent = "לא מאשרים";
+    btns.appendChild(yes); btns.appendChild(no);
+    box.appendChild(p); box.appendChild(btns);
+    document.body.appendChild(box);
+
+    var place = function () { try { box.style.bottom = 12 + bottomBar(box) + "px"; } catch (e) {} };
+    var t = 0, onMove = function () { clearTimeout(t); t = setTimeout(place, 120); };
+    place();
+    /* פס דביק יכול להופיע רק אחרי גלילה או באנימציה, ולכן בודקים שוב כל שנייה כל עוד הבאנר מוצג */
+    var tick = setInterval(place, 1000);
+    window.addEventListener("resize", onMove);
+    window.addEventListener("scroll", onMove, { passive: true });
+    var close = function () {
+      window.removeEventListener("resize", onMove);
+      window.removeEventListener("scroll", onMove);
+      clearInterval(tick);
+      box.remove();
+    };
+    yes.addEventListener("click", function () { setChoice("yes"); gaEvent("yes"); close(); });
+    no.addEventListener("click", function () {
+      setChoice("no"); gaEvent("no"); denyGa();
+      refused = true;
+      try { window.fbq && window.fbq("consent", "revoke"); } catch (e) {}
+      close();
+    });
+  }
+
+  var choice = getChoice();
+  if (choice === "no") { denyGa(); return; }
+  if (choice !== "yes") {
+    if (document.body) showBanner(); else document.addEventListener("DOMContentLoaded", showBanner);
+  }
 
   /* הקוד הרשמי של מטא לטעינת fbq */
   !function (f, b, e, v, n, t, s) {
@@ -71,6 +193,7 @@
   }
 
   function track(name, data, opts) {
+    if (refused) return;
     try {
       var id = (opts && opts.id) || eid();
       window.fbq("track", name, data || {}, { eventID: id });
