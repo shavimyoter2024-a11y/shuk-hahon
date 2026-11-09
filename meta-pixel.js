@@ -20,7 +20,7 @@
 
   /* ===== באנר יידוע על עוגיות (09/11/2026, טום) =====
      מודל יידוע עם אפשרות סירוב: עד שבוחרים הפיקסל עובד כרגיל.
-     "לא מאשרים" = הפיקסל נעצר מיד ולא נטען בביקורים הבאים, ו-Google Analytics עובר למצב בלי עוגיות.
+     "סירוב" = הפיקסל נעצר מיד ולא נטען בביקורים הבאים, ו-Google Analytics עובר למצב בלי עוגיות.
      הבחירה נשמרת בדפדפן (localStorage "sy_consent") ומשותפת לכל הדפים באותו דומיין.
      הבחירה נשלחת ל-GA כאירוע consent_choice, כדי לדעת כמה מסרבים. */
   var CONSENT_KEY = "sy_consent";
@@ -69,23 +69,23 @@
     if (document.getElementById("sy-consent")) return;
     var css = document.createElement("style");
     css.textContent =
-      "#sy-consent{position:fixed;inset-inline:12px;bottom:12px;z-index:2147483000;max-width:820px;margin:0 auto;" +
-      "display:flex;align-items:center;gap:12px 20px;padding:14px 16px 14px 22px;" +
+      "#sy-consent{position:fixed;left:12px;right:auto;bottom:12px;z-index:2147483000;width:max-content;max-width:min(460px,calc(100% - 24px));" +
+      "display:flex;align-items:center;gap:8px 14px;padding:8px 8px 8px 14px;" +
       "background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);" +
-      "color:#14171f;border:1px solid rgba(20,23,31,.16);border-radius:22px;" +
-      "font:inherit;font-size:15px;line-height:1.5;direction:rtl;text-align:right}" +
+      "color:#14171f;border:1px solid rgba(20,23,31,.16);border-radius:16px;" +
+      "font:inherit;font-size:13.5px;line-height:1.4;direction:rtl;text-align:right}" +
       "@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#sy-consent{background:rgba(255,255,255,.94)}}" +
       "#sy-consent p{margin:0;flex:1 1 auto}" +
       "#sy-consent a{color:inherit;text-decoration:underline;text-underline-offset:2px}" +
-      "#sy-consent .sy-btns{display:flex;gap:8px;flex:none}" +
-      "#sy-consent button{font:inherit;font-size:15px;font-weight:700;min-height:46px;padding:0 24px;border-radius:999px;cursor:pointer;" +
+      "#sy-consent .sy-btns{display:flex;gap:6px;flex:none}" +
+      "#sy-consent button{font:inherit;font-size:13.5px;font-weight:700;min-height:34px;min-width:64px;padding:0 14px;border-radius:999px;cursor:pointer;" +
       "transition:transform .08s}" +
       "#sy-consent button:active{transform:scale(.97)}" +
       "#sy-consent .sy-yes{background:#0b0b0d;color:#fff;border:1px solid #0b0b0d}" +
       "#sy-consent .sy-no{background:transparent;color:#14171f;border:1px solid rgba(20,23,31,.35)}" +
       "#sy-consent button:focus-visible{outline:3px solid #2f6fed;outline-offset:2px}" +
-      "@media (max-width:640px){#sy-consent{flex-direction:column;text-align:center;font-size:14px;padding:14px;gap:10px;border-radius:18px}" +
-      "#sy-consent .sy-btns{width:100%}#sy-consent button{flex:1 1 0;padding:0 12px}}" +
+      "@media (max-width:480px){#sy-consent{right:12px;width:auto;max-width:none;flex-wrap:wrap;justify-content:center;text-align:center;padding:10px;gap:8px}" +
+      "#sy-consent p{flex-basis:100%}#sy-consent .sy-btns{width:100%}#sy-consent button{flex:1 1 0;min-height:38px}}" +
       "@media (prefers-reduced-motion:reduce){#sy-consent button{transition:none}}" +
       "@media print{#sy-consent{display:none}}";
     document.head.appendChild(css);
@@ -97,20 +97,21 @@
     box.setAttribute("dir", "rtl");
     box.setAttribute("lang", "he");
     var p = document.createElement("p");
-    p.appendChild(document.createTextNode("אנחנו משתמשים בעוגיות ובפיקסל של Meta כדי למדוד ביקורים ולשפר את הפרסום. "));
+    p.appendChild(document.createTextNode("האתר משתמש בעוגיות למדידה ולפרסום. "));
     var href = privacyHref();
     if (href) {
       var a = document.createElement("a");
       a.href = href;
-      a.textContent = "למדיניות הפרטיות";
+      a.textContent = "פרטים";
+      a.setAttribute("aria-label", "מדיניות הפרטיות");
       p.appendChild(a);
     }
     var btns = document.createElement("div");
     btns.className = "sy-btns";
     var yes = document.createElement("button");
-    yes.type = "button"; yes.className = "sy-yes"; yes.textContent = "מאשרים";
+    yes.type = "button"; yes.className = "sy-yes"; yes.textContent = "אישור";
     var no = document.createElement("button");
-    no.type = "button"; no.className = "sy-no"; no.textContent = "לא מאשרים";
+    no.type = "button"; no.className = "sy-no"; no.textContent = "סירוב";
     btns.appendChild(yes); btns.appendChild(no);
     box.appendChild(p); box.appendChild(btns);
     document.body.appendChild(box);
