@@ -258,6 +258,9 @@ body.js:not(.no-gsap) .hero__title .line>span { transform:none !important; }
 .cb__msg { margin:0; text-align:center; color:var(--ink); font-size:16px; font-weight:800; }
 .cb__msg:empty { display:none; }
 .cb__msg.err { color:#a12a1f; }
+.cb__form[hidden], .cb__open[hidden] { display:none; }
+.cb__open { display:block; width:100%; max-width:520px; margin:14px auto 0; }
+.cb__form { margin-top:14px; }
 .cb--done .cb__row, .cb--done .cb__btn, .cb--done .cb__note, .cb--done .cb__sub { display:none; }
 @media (max-width:820px) { .cb { padding:26px 24px 30px; } }
 @media (max-width:520px) { .cb__row { grid-template-columns:1fr; } }

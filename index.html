@@ -632,7 +632,7 @@
     .legal-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 22px; }
     .legal-nav a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
   </style>
-  <link rel="stylesheet" href="redesign.css?v=20261103a" />
+  <link rel="stylesheet" href="redesign.css?v=20261109a" />
 </head>
 <body>
   <a class="skip" href="#main">דילוג לתוכן</a>
@@ -956,10 +956,12 @@
           </ul>
           <!-- "תחזרו אליי" (03.11.26, כמו בנדל"ן): נשלח ל-Worker shavim-links, שפותח התעניינות לאוריאל בפיירברי -->
           <div class="cb">
-            <form class="cb__form" id="cbForm" novalidate>
-              <p class="cb__or">עוד מתלבטים?</p>
+            <p class="cb__or">עוד מתלבטים?</p>
+            <!-- 09.11.26 לבקשת טום: הטופס סגור עד לחיצה על הכפתור -->
+            <button type="button" class="cb__btn cb__open" id="cbOpen" aria-expanded="false" aria-controls="cbForm">השאירו פרטים</button>
+            <form class="cb__form" id="cbForm" novalidate hidden>
               <p class="cb__title">נשמח לענות על כל שאלה</p>
-              <p class="cb__sub">השאירו פרטים ונחזור אליכם עוד היום</p>
+              <p class="cb__sub">נחזור אליכם עוד היום</p>
               <div class="cb__row">
                 <label class="cb__field">שם
                   <input type="text" name="name" autocomplete="name" required maxlength="80">
@@ -1357,6 +1359,12 @@
       // "תחזרו אליי": שליחה ל-Worker (text/plain = בלי בקשת preflight), שם ההתעניינות נפתחת לאוריאל
       var cbForm = document.getElementById("cbForm");
       if (cbForm) {
+        var cbOpen = document.getElementById("cbOpen");
+        if (cbOpen) cbOpen.addEventListener("click", function () {
+          cbOpen.hidden = true; cbOpen.setAttribute("aria-expanded", "true");
+          cbForm.hidden = false;
+          cbForm.elements["name"].focus();
+        });
         var cbStarted = false;
         cbForm.addEventListener("focusin", function () {
           if (cbStarted) return; cbStarted = true;
