@@ -97,7 +97,7 @@
     box.setAttribute("dir", "rtl");
     box.setAttribute("lang", "he");
     var p = document.createElement("p");
-    p.appendChild(document.createTextNode("האתר משתמש בעוגיות למדידה ולפרסום. "));
+    p.appendChild(document.createTextNode("לידיעתך, האתר עושה שימוש ב-Cookies. "));
     var href = privacyHref();
     if (href) {
       var a = document.createElement("a");
