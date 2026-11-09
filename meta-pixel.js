@@ -69,20 +69,23 @@
     if (document.getElementById("sy-consent")) return;
     var css = document.createElement("style");
     css.textContent =
-      "#sy-consent{position:fixed;inset-inline:12px;bottom:12px;z-index:2147483000;max-width:760px;margin:0 auto;" +
-      "display:flex;align-items:center;gap:14px 18px;padding:14px 16px;background:#fff;color:#1d2433;" +
-      "border:1px solid #c9ced8;border-radius:12px;font:inherit;font-size:15px;line-height:1.45;direction:rtl;text-align:right}" +
+      "#sy-consent{position:fixed;inset-inline:12px;bottom:12px;z-index:2147483000;max-width:820px;margin:0 auto;" +
+      "display:flex;align-items:center;gap:12px 20px;padding:14px 16px 14px 22px;" +
+      "background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);" +
+      "color:#14171f;border:1px solid rgba(20,23,31,.16);border-radius:22px;" +
+      "font:inherit;font-size:15px;line-height:1.5;direction:rtl;text-align:right}" +
+      "@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#sy-consent{background:rgba(255,255,255,.94)}}" +
       "#sy-consent p{margin:0;flex:1 1 auto}" +
       "#sy-consent a{color:inherit;text-decoration:underline;text-underline-offset:2px}" +
       "#sy-consent .sy-btns{display:flex;gap:8px;flex:none}" +
-      "#sy-consent button{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 18px;border-radius:9px;cursor:pointer;" +
-      "border:1px solid #1d2433;box-shadow:0 2px 0 #1d2433;transition:transform .08s,box-shadow .08s}" +
-      "#sy-consent button:active{transform:translateY(2px);box-shadow:0 0 0 #1d2433}" +
-      "#sy-consent .sy-yes{background:#1d2433;color:#fff;box-shadow:0 2px 0 #000}" +
-      "#sy-consent .sy-no{background:#fff;color:#1d2433}" +
+      "#sy-consent button{font:inherit;font-size:15px;font-weight:700;min-height:46px;padding:0 24px;border-radius:999px;cursor:pointer;" +
+      "transition:transform .08s}" +
+      "#sy-consent button:active{transform:scale(.97)}" +
+      "#sy-consent .sy-yes{background:#0b0b0d;color:#fff;border:1px solid #0b0b0d}" +
+      "#sy-consent .sy-no{background:transparent;color:#14171f;border:1px solid rgba(20,23,31,.35)}" +
       "#sy-consent button:focus-visible{outline:3px solid #2f6fed;outline-offset:2px}" +
-      "@media (max-width:640px){#sy-consent{flex-direction:column;text-align:center;font-size:14px;padding:12px 14px;gap:10px}" +
-      "#sy-consent .sy-btns{width:100%}#sy-consent button{flex:1 1 0}}" +
+      "@media (max-width:640px){#sy-consent{flex-direction:column;text-align:center;font-size:14px;padding:14px;gap:10px;border-radius:18px}" +
+      "#sy-consent .sy-btns{width:100%}#sy-consent button{flex:1 1 0;padding:0 12px}}" +
       "@media (prefers-reduced-motion:reduce){#sy-consent button{transition:none}}" +
       "@media print{#sy-consent{display:none}}";
     document.head.appendChild(css);
