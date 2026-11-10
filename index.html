@@ -1083,15 +1083,30 @@
     if (fresh) { try { localStorage.setItem(SK, JSON.stringify({ ts: now, v: fromUrl })); } catch (e) {} }
     window.syAttribution = function () { var o = {}; KEYS.forEach(function (k) { o[k] = cur[k] || ""; }); return o; };
     // תוספת קצרה ל-ipnurl של התשלום: מזהי מודעה + קמפיין/קריאייטיב, עד 300 תווים כדי לא לסכן את הסליקה
+    // fbp/fbc (מזהי הדפדפן של מטא) נקראים ברגע התשלום, כדי שהרכישה שהשרת שולח למטא תתחבר לאותו דפדפן
+    function ck(n) { var m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : ""; }
     window.syAdTail = function () {
+      var v = { fbp: ck("_fbp"), fbc: ck("_fbc") || (cur.fbclid ? "fb.1." + now + "." + cur.fbclid : "") };
+      KEYS.forEach(function (k) { v[k] = cur[k]; });
       var out = "";
-      ["ad_id", "adset_id", "campaign_id", "utm_campaign", "utm_content"].forEach(function (k) {
-        if (!cur[k]) return;
-        var part = "&" + k + "=" + encodeURIComponent(cur[k]);
-        if (out.length + part.length <= 300) out += part;
+      ["ad_id", "adset_id", "campaign_id", "fbp", "fbc", "utm_campaign", "utm_content"].forEach(function (k) {
+        if (!v[k]) return;
+        var part = "&" + k + "=" + encodeURIComponent(v[k]);
+        if (out.length + part.length <= 400) out += part;
       });
+      window.syAdTail.last = out;
       return out;
     };
+    // ברגע השליחה לתשלום (כרטיס או ביט) מרעננים את התוספת ב-ipnurl. שאר ה-ipnurl לא משתנה.
+    document.addEventListener("submit", function (e) {
+      try {
+        var f = e.target; if (!f.classList || !f.classList.contains("pay-form")) return;
+        var ipn = f.querySelector('input[name="ipnurl"]'); if (!ipn || !ipn.value) return;
+        var old = window.syAdTail.last || "", val = ipn.value;
+        if (old) { if (val.slice(-old.length) !== old) return; val = val.slice(0, val.length - old.length); }
+        ipn.value = val + window.syAdTail();
+      } catch (err) {}
+    }, true);
     // שדות נסתרים בכל טופס בדף חוץ מטופס UPAY
     try {
       Array.prototype.forEach.call(document.querySelectorAll("form:not(.pay-form)"), function (f) {
