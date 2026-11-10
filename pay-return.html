@@ -49,7 +49,10 @@
         }
       } catch (e) {}
 
-      var dest = failed ? "./?payment=failed#register" : "./toda.html";
+      // מספר העסקה והסכום עוברים לדף התודה: שם נספרת רכישה אחת לכל עסקה (10/11)
+      var tx = (p.get("transactionid") || "").replace(/[^\w-]/g, "").slice(0, 64);
+      var amt = (p.get("amount") || "").replace(/[^\d.]/g, "").slice(0, 10);
+      var dest = failed ? "./?payment=failed#register" : "./toda.html" + (tx ? "?tx=" + encodeURIComponent(tx) + (amt ? "&v=" + amt : "") : "");
       var target = window.top || window;
       try {
         target.location.href = new URL(dest, location.href).href;

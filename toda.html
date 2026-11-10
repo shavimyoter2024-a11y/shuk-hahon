@@ -11,6 +11,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- GA4: זרם "דפי נחיתה". purchase רק כשיש מספר עסקה מ-pay-return, פעם אחת לכל עסקה (10/11: עד אז רכישה בשוק ההון לא נמדדה בכלל) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR923MZ0BW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date()); gtag("config", "G-NR923MZ0BW");
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var tx = (q.get("tx") || "").replace(/[^\w-]/g, "").slice(0, 64);
+      var v = Number(q.get("v")) || 390; // UPAY לא תמיד מחזיר סכום: ברירת מחדל = מחיר הקורס
+      if (!tx) return; // כניסה ישירה לדף התודה לא נספרת כרכישה
+      var key = "purchase_sent_" + tx, sent = false;
+      try { sent = localStorage.getItem(key) === "1"; } catch (e) {}
+      if (sent) return;
+      gtag("event", "purchase", { currency: "ILS", value: v, transaction_id: tx, page_id: "shuk-hahon",
+        items: [{ item_name: "קורס שוק ההון", price: v, quantity: 1 }] });
+      try { localStorage.setItem(key, "1"); } catch (e) {}
+    })();
+  </script>
+
   <style>
     :root {
       --bg:#1a2410; --bg-lift:#26331a; --gold:#e8bd57; --gold-soft:#f2d488;
