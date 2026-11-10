@@ -1063,6 +1063,46 @@
 
   <div class="mobile-cta" role="complementary" aria-label="הרשמה מהירה"><a class="btn btn-gold" href="#register" id="mobileCtaBtn">להרשמה לקורס</a></div>
 
+  <script>
+  /* ייחוס מודעות (בקשת הקמפיינר 10.11): ad_id ו-UTM נשמרים 30 יום בדפדפן ומגיעים ל-Make עם כל רכישה וליד.
+     window.syAttribution() מחזיר את כל הנתונים. טופס הסליקה של UPAY לא נוגעים בו: הנתונים נוסעים ב-ipnurl. */
+  (function () {
+    var KEYS = ["ad_id", "adset_id", "campaign_id", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
+    var SK = "sy_attr", TTL = 30 * 864e5, now = Date.now(), fromUrl = {}, stored = {};
+    try {
+      var qs = new URLSearchParams(location.search);
+      var hq = location.hash.split("?")[1];
+      if (hq) new URLSearchParams(hq).forEach(function (v, k) { if (!qs.has(k)) qs.set(k, v); });
+      if (!qs.get("utm_source") && qs.get("source")) qs.set("utm_source", qs.get("source"));
+      if (!qs.get("utm_medium") && qs.get("medium")) qs.set("utm_medium", qs.get("medium"));
+      KEYS.forEach(function (k) { var v = (qs.get(k) || "").trim().slice(0, k === "fbclid" ? 250 : 100); if (v) fromUrl[k] = v; });
+    } catch (e) {}
+    try { var s = JSON.parse(localStorage.getItem(SK) || "null"); if (s && s.ts && now - s.ts < TTL) stored = s.v || {}; } catch (e) {}
+    var fresh = Object.keys(fromUrl).length > 0;
+    var cur = fresh ? fromUrl : stored; // קליק חדש על מודעה מחליף את כל הסט (last touch)
+    if (fresh) { try { localStorage.setItem(SK, JSON.stringify({ ts: now, v: fromUrl })); } catch (e) {} }
+    window.syAttribution = function () { var o = {}; KEYS.forEach(function (k) { o[k] = cur[k] || ""; }); return o; };
+    // תוספת קצרה ל-ipnurl של התשלום: מזהי מודעה + קמפיין/קריאייטיב, עד 300 תווים כדי לא לסכן את הסליקה
+    window.syAdTail = function () {
+      var out = "";
+      ["ad_id", "adset_id", "campaign_id", "utm_campaign", "utm_content"].forEach(function (k) {
+        if (!cur[k]) return;
+        var part = "&" + k + "=" + encodeURIComponent(cur[k]);
+        if (out.length + part.length <= 300) out += part;
+      });
+      return out;
+    };
+    // שדות נסתרים בכל טופס בדף חוץ מטופס UPAY
+    try {
+      Array.prototype.forEach.call(document.querySelectorAll("form:not(.pay-form)"), function (f) {
+        KEYS.forEach(function (k) {
+          if (!cur[k] || f.querySelector('input[name="' + k + '"]')) return;
+          var i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = cur[k]; f.appendChild(i);
+        });
+      });
+    } catch (e) {}
+  })();
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script>
     (function () {
@@ -1273,8 +1313,9 @@
           var hq = (window.location.hash.split("?")[1] || "");
           if (hq) new URLSearchParams(hq).forEach(function (v, k) { if (!qs.has(k)) qs.set(k, v); });
         } catch (e2) {}
-        var src = (qs.get("utm_source") || qs.get("source") || "").slice(0, 60);
-        var med = (qs.get("utm_medium") || qs.get("medium") || "").slice(0, 60);
+        var A = (window.syAttribution && window.syAttribution()) || {};
+        var src = (qs.get("utm_source") || qs.get("source") || A.utm_source || "").slice(0, 60);
+        var med = (qs.get("utm_medium") || qs.get("medium") || (src === A.utm_source ? A.utm_medium : "") || "").slice(0, 60);
         var utmTail = src ? "utm_source=" + encodeURIComponent(src) +
                       (med ? "&utm_medium=" + encodeURIComponent(med) : "") : "";
         if (utmTail) {
@@ -1288,7 +1329,7 @@
           var ipn = document.querySelector('.pay-form input[name="ipnurl"]');
           if (ipn) ipn.value = ATTRIBUTION_WEBHOOK_URL +
             (ATTRIBUTION_WEBHOOK_URL.indexOf("?") === -1 ? "?" : "&") +
-            "page=" + PAGE_ID + (utmTail ? "&" + utmTail : "");
+            "page=" + PAGE_ID + (utmTail ? "&" + utmTail : "") + (window.syAdTail ? window.syAdTail() : "");
         }
       } catch (e) {}
 
@@ -1362,11 +1403,13 @@
           if (name.length < 2) { msg.className += " err"; msg.textContent = "כתבו את השם שלכם"; cbForm.elements["name"].focus(); return; }
           if (!/^0?5\d{8}$|^9725\d{8}$/.test(phone)) { msg.className += " err"; msg.textContent = "בדקו את מספר הטלפון"; cbForm.elements["phone"].focus(); return; }
           var q = new URLSearchParams(window.location.search);
+          var SA = (window.syAttribution && window.syAttribution()) || {};
           btn.disabled = true; msg.textContent = "שולחים…";
           fetch("https://go.shavimyoter.co/api/lp/callback", {
             method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" },
             body: JSON.stringify({ page: "shuk-hahon", name: name, phone: phone, website: cbForm.elements["website"].value,
-              utm_source: q.get("utm_source") || q.get("source") || "", utm_medium: q.get("utm_medium") || q.get("medium") || "" })
+              utm_source: q.get("utm_source") || q.get("source") || SA.utm_source || "", utm_medium: q.get("utm_medium") || q.get("medium") || SA.utm_medium || "",
+              ad_id: SA.ad_id, adset_id: SA.adset_id, campaign_id: SA.campaign_id, utm_campaign: SA.utm_campaign, utm_content: SA.utm_content, utm_term: SA.utm_term, fbclid: SA.fbclid })
           }).then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.ok) throw new Error(d.error || r.status); }); })
             .then(function () {
               cbForm.classList.add("cb--done");
