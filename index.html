@@ -1424,7 +1424,7 @@
             method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" },
             body: JSON.stringify({ page: "shuk-hahon", name: name, phone: phone, website: cbForm.elements["website"].value,
               utm_source: q.get("utm_source") || q.get("source") || SA.utm_source || "", utm_medium: q.get("utm_medium") || q.get("medium") || SA.utm_medium || "",
-              ad_id: SA.ad_id, adset_id: SA.adset_id, campaign_id: SA.campaign_id, utm_campaign: SA.utm_campaign, utm_content: SA.utm_content, utm_term: SA.utm_term, fbclid: SA.fbclid })
+              ad_id: SA.ad_id, adset_id: SA.adset_id, campaign_id: SA.campaign_id, utm_campaign: SA.utm_campaign, utm_content: SA.utm_content, utm_term: SA.utm_term, fbclid: SA.fbclid, landing_page: location.href.split("#")[0] })
           }).then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.ok) throw new Error(d.error || r.status); }); })
             .then(function () {
               cbForm.classList.add("cb--done");
