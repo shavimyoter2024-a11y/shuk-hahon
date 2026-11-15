@@ -53,12 +53,40 @@
       var tx = (p.get("transactionid") || "").replace(/[^\w-]/g, "").slice(0, 64);
       var amt = (p.get("amount") || "").replace(/[^\d.]/g, "").slice(0, 10);
       var dest = failed ? "./?payment=failed#register" : "./toda.html" + (tx ? "?tx=" + encodeURIComponent(tx) + (amt ? "&v=" + amt : "") : "");
-      var target = window.top || window;
-      try {
-        target.location.href = new URL(dest, location.href).href;
-      } catch (e) {
-        location.href = dest;
+      function go() {
+        var target = window.top || window;
+        try {
+          target.location.href = new URL(dest, location.href).href;
+        } catch (e) {
+          location.href = dest;
+        }
       }
+
+      // purchase נשלח כבר כאן (15/11/2026): כשהאירוע היה רק בדף התודה, אחרי עוד מעבר עמוד, חלק מהרכישות לא נרשמו
+      // (בבלאק פריידי 14/11 נרשמה 1 מ-4). הדף הזה נטען תמיד כש-UPAY מחזיר הצלחה, ובאותו דומיין, אז הייחוס נשמר.
+      // אותו מפתח כמו בדף התודה, כדי שלא ייספר פעמיים.
+      var GA = "G-NR923MZ0BW", key = "purchase_sent_" + tx, sent = false;
+      try { sent = localStorage.getItem(key) === "1"; } catch (e) {}
+      if (failed || !tx || sent) { go(); return; }
+      var v = Number(amt) || 390;
+      var done = false;
+      function fin() { if (done) return; done = true; go(); }
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      gtag("js", new Date());
+      gtag("config", GA, { send_page_view: false });
+      gtag("event", "purchase", {
+        currency: "ILS", value: v, transaction_id: tx, page_id: "shuk-hahon",
+        items: [{ item_name: "קורס שוק ההון", price: v, quantity: 1 }],
+        transport_type: "beacon",
+        event_callback: function () { try { localStorage.setItem(key, "1"); } catch (e) {} fin(); }
+      });
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA;
+      s.onerror = fin;
+      document.head.appendChild(s);
+      setTimeout(fin, 1500); // בכל מקרה לא מחזיקים את הרוכש יותר משנייה וחצי
     })();
   </script>
 </body>
