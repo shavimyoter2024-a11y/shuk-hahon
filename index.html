@@ -1404,9 +1404,11 @@
           cbOpen.hidden = true; cbOpen.setAttribute("aria-expanded", "true");
           cbForm.hidden = false;
           cbForm.elements["name"].focus();
+          try { if (window.gtag) window.gtag("event", "callback_open", { form: "callback", page_id: "shuk-hahon" }); } catch (e3) {}
         });
+        // 16.11.26: form_start רק כשמקלידים בפועל (קודם נורה כבר בלחיצה על "השאירו פרטים", כי הכפתור שם פוקוס בשדה)
         var cbStarted = false;
-        cbForm.addEventListener("focusin", function () {
+        cbForm.addEventListener("input", function () {
           if (cbStarted) return; cbStarted = true;
           try { if (window.gtag) window.gtag("event", "form_start", { form: "callback", page_id: "shuk-hahon" }); } catch (e4) {}
         });
